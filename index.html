@@ -1,236 +1,353 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Call of Duty: La Experiencia Del videojuego en fps</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <title>Tarea Arquitectura de PC y SO</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
+        /* --- ESTILOS GLOBALES Y TEMA RETRO --- */
         :root {
-            --color-dark-bg: #1a1a1a;
-            --color-light-bg: #2b2b2b;
-            --color-accent: #e50914; /* Rojo distintivo de CoD */
-            --color-text-light: #f0f0f0;
-            --color-text-dark: #cccccc;
-            --font-primary: 'Roboto', sans-serif;
-            --font-display: 'Orbitron', sans-serif;
+            --neon-cyan: #00ffff;
+            --neon-magenta: #ff00ff;
+            --neon-yellow: #ffff00;
+            --background-color: #0d0d0d;
+            --text-color: #e0e0e0;
+            --border-glow: 0 0 5px var(--neon-cyan), 0 0 10px var(--neon-cyan), 0 0 15px var(--neon-cyan);
+            --text-glow: 0 0 3px var(--text-color);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            font-family: var(--font-primary);
-            margin: 0;
-            padding-bottom: 80px; /* Espacio para el footer fijo */
-            background-color: var(--color-dark-bg);
-            color: var(--color-text-light);
-            line-height: 1.6;
-            overflow-x: hidden;
+            font-family: 'Press Start 2P', cursive;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            background-image: url('https://i.pinimg.com/originals/8c/b5/70/8cb5702dd040f7943c2c2f4830a6c0c6.gif');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            padding: 2rem;
+            text-shadow: var(--text-glow);
+        }
+        
+        /* --- CONTENEDOR PRINCIPAL Y ANIMACIONES --- */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: rgba(10, 20, 40, 0.85);
+            border: 3px solid var(--neon-cyan);
+            box-shadow: var(--border-glow), inset 0 0 10px rgba(0, 255, 255, 0.5);
+            padding: 2rem;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
         }
 
-        header {
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://placehold.co/1920x400/000000/E50914?text=Fondo+de+CoD+aqui') no-repeat center center/cover; 
-            padding: 80px 0;
+        @keyframes flicker {
+            0%, 18%, 22%, 25%, 53%, 57%, 100% {
+                text-shadow: 0 0 4px var(--neon-magenta), 0 0 11px var(--neon-magenta), 0 0 19px var(--neon-magenta);
+            }
+            20%, 24%, 55% {
+                text-shadow: none;
+            }
+        }
+
+        /* --- TÍTULOS Y TEXTOS --- */
+        h1, h2 {
+            font-size: 1.8rem;
+            color: var(--neon-magenta);
             text-align: center;
-            position: relative;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-            overflow: hidden;
-        }
-        header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.6); z-index: 1; }
-        header h1 {
-            margin: 0; font-family: var(--font-display); font-size: 3.8em; color: var(--color-accent); 
-            text-shadow: 0 0 15px rgba(229, 9, 20, 0.7); position: relative; z-index: 2; animation: fadeInDown 1s ease-out;
-        }
-        header p {
-            font-size: 1.5em; color: var(--color-text-dark); position: relative; z-index: 2; overflow: hidden;
-            border-right: .15em solid var(--color-accent); white-space: nowrap; margin: 0 auto; letter-spacing: .1em;
-            max-width: 800px; animation: typing 3s steps(40, end), blink-caret .75s step-end infinite;
-            animation-delay: 1s; animation-fill-mode: forwards;
+            margin-bottom: 2rem;
+            animation: flicker 3s infinite alternate;
         }
 
-        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-50px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes typing { from { width: 0 } to { width: 100% } }
-        @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--color-accent); } }
-
-        .container { width: 90%; max-width: 1200px; margin: 40px auto; padding: 20px 0; }
-
-        section {
-            padding: 30px; margin-bottom: 40px; background: var(--color-light-bg); border-radius: 12px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5); transition: transform 0.3s ease-in-out;
-            border-left: 5px solid var(--color-accent); opacity: 0; transform: translateY(20px);
-            animation: sectionFadeIn 0.8s ease-out forwards;
-        }
-        section:hover { transform: translateY(-5px); }
-
-        /* Retrasos para animacion escalonada */
-        section:nth-of-type(1) { animation-delay: 2.5s; }
-        section:nth-of-type(2) { animation-delay: 3s; }
-        section:nth-of-type(3) { animation-delay: 3.5s; }
-        section:nth-of-type(4) { animation-delay: 4s; }
-        section:nth-of-type(5) { animation-delay: 4.5s; }
-        section:nth-of-type(6) { animation-delay: 5s; }
-        section:nth-of-type(7) { animation-delay: 5.5s; }
-
-        @keyframes sectionFadeIn { to { opacity: 1; transform: translateY(0); } }
-
-        h2 { font-family: var(--font-display); color: var(--color-accent); border-bottom: 3px solid var(--color-accent);
-            padding-bottom: 10px; margin-top: 0; margin-bottom: 20px; text-shadow: 0 0 8px rgba(229, 9, 20, 0.4);
+        h2 {
+            font-size: 1.5rem;
+            color: var(--neon-yellow);
+            margin-top: 3rem;
+            animation: none;
+            text-shadow: 0 0 5px var(--neon-yellow);
         }
 
-        /* Estilos de Contenido e Imagenes */
-        ul { list-style: none; padding-left: 0; }
-        ul li { position: relative; padding-left: 30px; margin-bottom: 12px; color: var(--color-text-dark); }
-        ul li::before { content: '»'; color: var(--color-accent); font-size: 1.2em; position: absolute; left: 0; top: 0; }
+        p, li {
+            font-size: 0.8rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+
+        a {
+            color: var(--neon-cyan);
+            text-decoration: none;
+            word-break: break-all;
+            transition: all 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--neon-yellow);
+            text-shadow: 0 0 5px var(--neon-yellow);
+        }
+
+        /* --- SECCIONES Y CONTENIDO --- */
+        .content-section {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            border: 2px dashed var(--neon-cyan);
+            background-color: rgba(0, 0, 0, 0.3);
+        }
         
-        .img-container { text-align: center; margin: 20px 0; }
-        .img-container img {
-            max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-            transition: transform 0.4s ease; border: 3px solid #4a4a4a;
+        .content-section img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 1.5rem auto;
+            border: 2px solid var(--neon-magenta);
         }
-        .img-container img:hover { transform: scale(1.02); border-color: var(--color-accent); }
-        
-        .info-list { margin-top: 20px; }
-        .info-list li {
-            background-color: #3a3a3a; padding: 15px; border-radius: 8px; margin-bottom: 15px;
-            border-left: 3px solid var(--color-accent); transition: background-color 0.3s;
-        }
-        .info-list li:hover { background-color: #4a4a4a; }
-        .info-list strong { color: var(--color-accent); font-family: var(--font-display); }
 
-        footer {
-            background-color: #0d0d0d; color: var(--color-text-dark); text-align: center; padding: 20px 0;
-            position: fixed; bottom: 0; width: 100%; border-top: 3px solid var(--color-accent);
-            box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.4); z-index: 10;
+        /* Clase para la imagen grande de CPU-Z */
+        .cpu-z-image {
+            width: 40%; /* Aumenta el tamaño relativo */
+            max-width: 700px; /* Límite para que no sea excesivamente grande en monitores anchos */
+        }
+
+        /* Contenedor para imágenes lado a lado */
+        .image-grid {
+            display: flex;
+            flex-wrap: wrap; /* Para que se pongan una debajo de otra en pantallas pequeñas */
+            gap: 1.5rem; /* Espacio entre las imágenes */
+            justify-content: center;
+            margin-bottom: 2%;
+        }
+        
+        /* Estilo para cada imagen en el contenedor grid */
+        .image-grid img {
+            flex: 1 1 45%; /* Permite que las imágenes se ajusten, con un tamaño base del 45% */
+            min-width: 300px; /* Ancho mínimo antes de que se apilen verticalmente */
+            margin: 0; /* Anula el margen 'auto' para que flexbox las posicione */
+        }
+
+        .pdf-container {
+            width: 100%;
+            height: 500px;
+            border: 2px solid var(--neon-magenta);
+        }
+        
+        .placeholder-text {
+            color: #888;
+            font-style: italic;
+        }
+
+        /* --- FOOTER Y CREADORES --- */
+        .creators-section {
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .creators-section h3 {
+            color: var(--neon-yellow);
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+
+        .creator {
+            display: inline-block;
+            margin: 0 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .creator a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .creator svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--neon-cyan);
+            transition: all 0.3s ease;
+        }
+        
+        .creator a:hover svg {
+            fill: var(--neon-yellow);
+            transform: scale(1.1);
+        }
+        
+        /* --- RESPONSIVE DESIGN --- */
+        @media (max-width: 768px) {
+            body { padding: 1rem; }
+            .container { padding: 1.5rem; }
+            h1 { font-size: 1.5rem; }
+            h2 { font-size: 1.2rem; }
+            p, li { font-size: 0.7rem; }
+            .creator {
+                display: block;
+                margin: 1rem auto;
+            }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>CALL OF DUTY: WARZONE & HARDWARE</h1>
-        <p>Tu próxima misión te espera: Análisis de Gaming y Componentes PC.</p>
-    </header>
-
     <div class="container">
+        <!-- Título principal -->
+        <h1>> TAREA: ARQUITECTURA_PC_Y_SO_</h1>
 
-        <section id="parte1-intro">
-            <h2>PARTE 1: Introducción a la Página Web y Servidor Local</h2>
-            <p>Esta sección presenta el diseño de la página web de la franquicia **Call of Duty**, que combina un estilo moderno (CSS) con animaciones (CSS Keyframes) para una experiencia inmersiva.</p>
-            <p>El código fuente ha sido desarrollado para ser ejecutado en un servidor local, como se evidencia a continuación, accesible mediante `127.0.0.1` o `localhost` (Recursos obtenidos de: W3Schools, 2024; Python Software Foundation, 2024).</p>
+        <!-- ====================================================================== -->
+        <!-- ==========================   PARTE 1   =============================== -->
+        <!-- ====================================================================== -->
+        <section id="parte1">
+            <h2>PARTE 1: LEVANTAMIENTO DEL SERVIDOR</h2>
+            <div class="content-section">
+                <h3>Guía Rápida para Servir un HTML Local con Nginx en Windows</h3>
+                <p>Para levantar un sitio web estático en localhost usando Nginx en un entorno Windows, el proceso se resume en tres pasos principales: preparación de archivos, ejecución del servidor y verificación.</p>
+                
+                <h4>1. Preparación del Entorno</h4>
+                <p>El primer paso consiste en preparar tanto el servidor como el contenido.</p>
+                <ul>
+                    <li><b>Descarga y ubicación de Nginx:</b> Se descarga la versión estable de Nginx para Windows desde su sitio web oficial. El archivo .zip se descomprime en una ubicación accesible, comúnmente en la raíz del disco como C:\nginx.</li>
+                    <li><b>Creación del archivo HTML:</b> Se crea un archivo index.html básico. Este archivo se debe colocar dentro de la carpeta C:\nginx\html, que es el directorio por defecto que Nginx utiliza para servir contenido.</li>
+                </ul>
+                <p class="placeholder-text" style="text-align:center;">[AQUÍ VA LA FOTO DEL PASO 1]</p>
+                <!-- Sube tu imagen a https://postimages.org/ y pega el "Enlace directo" en el 'src' de abajo -->
+                <img src="https://placehold.co/800x400/0d0d0d/ff00ff?text=Evidencia+Paso+1" alt="Evidencia del paso 1: Preparación del entorno y archivos">
+
+                <h4>2. Configuración y Ejecución</h4>
+                <p>Con los archivos en su lugar, el siguiente paso es iniciar el servidor.</p>
+                <ul>
+                    <li><b>Configuración por defecto:</b> No es necesario modificar la configuración inicial. El archivo nginx.conf (ubicado en C:\nginx\conf) ya está preconfigurado para escuchar en el puerto 80 y buscar el archivo index.html en la carpeta html.</li>
+                    <li><b>Inicio del servidor:</b> Se abre una terminal (CMD o PowerShell), se navega hasta el directorio C:\nginx y se ejecuta el comando <code>start nginx</code>. Esto inicia el proceso del servidor en segundo plano.</li>
+                </ul>
+                <p class="placeholder-text" style="text-align:center;">[AQUÍ VA LA FOTO DEL PASO 2]</p>
+                <!-- Sube tu imagen a https://postimages.org/ y pega el "Enlace directo" en el 'src' de abajo -->
+                <img src="https://placehold.co/800x400/0d0d0d/ff00ff?text=Evidencia+Paso+2" alt="Evidencia del paso 2: Ejecución de Nginx desde la terminal">
+                
+                <h4>3. Verificación</h4>
+                <p>Finalmente, para comprobar que el sitio está en línea, se abre un navegador web y se accede a la dirección <a href="http://localhost" target="_blank">http://localhost</a>. Si todo el proceso se realizó correctamente, el navegador mostrará el contenido del archivo index.html que fue creado.</p>
+                <p class="placeholder-text" style="text-align:center;">[AQUÍ VA LA FOTO DEL PASO 3]</p>
+                <!-- Sube tu imagen a https://postimages.org/ y pega el "Enlace directo" en el 'src' de abajo -->
+                <img src="https://placehold.co/800x400/0d0d0d/ff00ff?text=Evidencia+Paso+3" alt="Evidencia del paso 3: Verificación de la página en el navegador">
+            </div>
         </section>
 
-        <section id="parte1-evidencia">
-            <h2>Puesta en Marcha del Servidor Web Local (Evidencia)</h2>
-            <p>El servidor se levanta usando el módulo `http.server` de **Python** en el **puerto 8000** (Python Software Foundation, 2024). Esto permite acceder a la página a través de **`http://localhost:8000`**.</p>
-            
-            <h3>1. Terminal con Servidor de Windows Activo:</h3>
-            <p>Se muestra la ejecución del comando `Windows -m http.server 8000` en la terminal.</p>
-            <div class="img-container">
-                <img src="terminal_server_running.png" alt="Captura de pantalla de la terminal con el servidor Python activo.">
-            </div>
-            
-            <h3>2. Navegador Accediendo a localhost:8000:</h3>
-            <p>Se muestra la página web cargada en el navegador, confirmando el acceso local.</p>
-            <div class="img-container">
-                <img src="browser_localhost_evidence.png" alt="Captura de pantalla del navegador mostrando la web en localhost:8000.">
+        <!-- ====================================================================== -->
+        <!-- ==========================   PARTE 2   =============================== -->
+        <!-- ====================================================================== -->
+        <section id="parte2">
+            <h2>PARTE 2: ANALISIS DE MAINBOARD</h2>
+            <div class="content-section">
+                <h3>Evidencia de CPU-Z</h3>
+                <p>A continuación se muestra la captura del software CPU-Z con la información de la mainboard del equipo.</p>
+                <img src="https://i.postimg.cc/44rGHKfD/Captura-de-pantalla-2025-10-06-223718.png" alt="Captura de CPU-Z mostrando información de la Mainboard" class="cpu-z-image">
+
+                <h3>Datasheet de la Mainboard</h3>
+                <p>El datasheet contiene las especificaciones técnicas completas del componente. Puedes consultarlo a continuación:</p>
+
+                <p class="placeholder-text">[REEMPLAZA EL ENLACE DE ABAJO POR EL ENLACE A TU PDF O FORO]</p>
+                <a href="https://www.example.com/datasheet.pdf" target="_blank">> Ver Datasheet/Foro de la Mainboard</a>
+                <!-- <embed src="URL_DE_TU_PDF" type="application/pdf" class="pdf-container"/> -->
+
+                <h3>3 Características destacadas</h3>
+                <div class="placeholder-text">
+                    <p><b>1. Característica 1: [Nombre de la característica]</b><br>
+                    [AQUÍ VA LA DESCRIPCIÓN DE LA PRIMERA CARACTERÍSTICA QUE TE LLAMÓ LA ATENCIÓN].
+                    <br>
+                    <small>Fuente: <a href="#" target="_blank">[Pega aquí el enlace de la fuente]</a></small>
+                    </p>
+
+                    <p><b>2. Característica 2: [Nombre de la característica]</b><br>
+                    [AQUÍ VA LA DESCRIPCIÓN DE LA SEGUNDA CARACTERÍSTICA].
+                    <br>
+                    <small>Fuente: <a href="#" target="_blank">[Pega aquí el enlace de la fuente]</a></small>
+                    </p>
+
+                    <p><b>3. Característica 3: [Nombre de la característica]</b><br>
+                    [AQUÍ VA LA DESCRIPCIÓN DE LA TERCERA CARACTERÍSTICA].
+                    <br>
+                    <small>Fuente: <a href="#" target="_blank">[Pega aquí el enlace de la fuente]</a></small>
+                    </p>
+                </div>
             </div>
         </section>
 
-        <hr>
+        <!-- ====================================================================== -->
+        <!-- ==========================   PARTE 3   =============================== -->
+        <!-- ====================================================================== -->
+        <section id="parte3">
+            <h2>PARTE 3: BIOS / UEFI</h2>
+            <div class="content-section">
+                <h3>Evidencia de la Interfaz UEFI</h3>
+                <p>Capturas tomadas de la utilidad de BIOS de una laptop ASUS, mostrando el modo EZ y el menú de seguridad.</p>
+                <div class="image-grid">
+                    <img src="https://i.postimg.cc/HnSTF3DW/Imagen-de-Whats-App-2025-10-06-a-las-20-26-33-b7ceb656.jpg" alt="Foto de la BIOS/UEFI de una laptop ASUS - Modo EZ">
+                    <img src="https://i.postimg.cc/hvCKNMWD/Imagen-de-Whats-App-2025-10-06-a-las-20-28-38-131e0491.jpg" alt="Foto de la BIOS/UEFI de una laptop ASUS - Secure Boot">
+                </div>
 
-        <section id="parte2-mainboard">
-            <h2>PARTE 2: Análisis de la Mainboard con CPU-Z</h2>
-            <p>Se utilizó el programa **CPU-Z** (CPUID, 2024) para obtener la información detallada del sistema, específicamente el modelo de la Mainboard, lo cual es esencial para conocer las capacidades de expansión del equipo.</p>
-            
-            <h3>1. Modelo de la Mainboard (Evidencia CPU-Z):</h3>
-            <p>La captura de pantalla de CPU-Z muestra el modelo exacto de la placa madre del equipo.</p>
-            <div class="img-container">
-                <img src="cpu_z_mainboard_capture.png" alt="Captura de CPU-Z mostrando la pestaña Mainboard.">
+                <h3>Explicación de Parámetros</h3>
+                
+                <p><b>1. Secure Boot (Arranque Seguro)</b><br>
+                El Secure Boot o arranque seguro, es un modo para UEFI que trae Windows desde Windows 8, y que impide la ejecución de cualquier software no firmado o certificado en el arranque del sistema. Con ello se intenta evitar la carga de malware o aplicaciones que no sean de fiar cuando inicias el ordenador, pero también afecta a sistemas operativos como las distribuciones GNU/Linux. Afortunadamente, con el paso del tiempo las distribuciones Linux se están empezando a adaptar.
+                <br>
+                <small>Fuente: <a href="https://www.xataka.com/basics/que-secure-boot-uefi-como-puedes-desactivarlo" target="_blank">Xataka</a></small>
+                </p>
+
+                <p><b>2. Windows Boot Manager (BOOTMGR)</b><br>
+                El Windows Boot Manager (BOOTMGR) es un pequeño software cargado desde el código de volumen de arranque. Es el responsable de ayudar a tu sistema operativo Windows (10, 8, 7 o Vista) en su proceso de arranque. El Windows Boot Manager eventualmente ejecutará el archivo winload.exe, que es el gestor de arranque utilizado por el sistema para continuar con el proceso de inicio de Windows.
+                <br>
+                <small>Fuente: <a href="https://www.neoguias.com/que-es-el-windows-boot-manager/" target="_blank">Neoguias</a></small>
+                </p>
+                
+                <p><b>3. Boot Menu (Menú de Arranque)</b><br>
+                El menú Boot en Windows es una herramienta importante que te permite seleccionar qué sistema operativo o dispositivo de arranque utilizar cuando enciendes tu computadora. Desde este menú puedes elegir arrancar desde un disco duro, una unidad de CD/DVD, un puerto USB o una unidad de red, lo que es fundamental para instalar nuevos sistemas operativos o ejecutar herramientas de diagnóstico.
+                <br>
+                <small>Fuente: <a href="https://tutowindow.com/que-es-el-menu-boot/?expand_article=1" target="_blank">TutoWindow</a></small>
+                </p>
             </div>
-            
-            <h3 id="datasheet">2. Datasheet y Características:</h3>
-<p>El manual de la Mainboard es crucial para cualquier actualización o diagnóstico avanzado (ASUS, 2020).</p>
-
-<p>
-    <strong>Enlace al Datasheet (PDF/Foro):</strong> 
-    <a href="MS-16R6_v1.0_English.pdf">
-        [Manual de Mantenimiento MSI GF63]
-    </a>
-</p>
-
-<p style="color: yellow; font-weight: bold;">
-    ¡ACLARACIÓN! Nuestro grupo preguntó si podíamos usar el manual de mantenimiento del dispositivo.
-</p>
-
-<div class="img-container">
-    <img src="la_ram_capture.png" alt="Captura de las especificaciones de la memoria RAM.">
-</div>
-            <h3 style="margin-top: 30px;">3. Tres Características Destacadas de la Mainboard:</h3>
-            <ul class="info-list">
-                <li>
-                    <strong>Característica 1: [DDR 4]</strong>
-                    <p>Explicación: [DDR4 (Double Data Rate type four Synchronous Dynamic Random-Access Memory) es un tipo de memoria de computadora de acceso aleatorio. Es la cuarta generación de memoria DDR SDRAM y ofrece mayor velocidad, eficiencia, capacidades DIMM más elevadas y menor consumo de energía.].</p>
-                    <p>Fuente: <a href=" https://www.lenovo.com/mx/es/faqs/pc-vida-faqs/que-es-ddr4-ram/?orgRef=https%253A%252F%252Fwww.bing.com%252F&msockid=275a5e77c76a6a821be74bafc68c6bc3" target="_blank" style="color: #4CAF50;">[Lenovo.com]</a></p>
-                </li>
-                    <strong>Característica 2: [2 x ranuras SO-DIMM]</strong>
-                    <p>Explicación: [Esto hace referencia a la cantidad de ranuras disponibles para instalar módulos de memoria RAM en formato SO-DIMM (Small Outline Dual Inline Memory Module), que es un tipo de memoria más pequeña y comúnmente utilizada en dispositivos como portátiles o PCs compactos.].</p>
-                    <p>Fuente: <a href="https://www.profesionalreview.com/2022/05/30/dimm" target="_blank" style="color: #4CAF50;">[Profesional Review, 2022]</a></p>
-                </li>
-                <li>
-                    <strong>Característica 3: [Up to 64]</strong>
-                    <p>Explicación: [Indica un límite o cantidad máxima de algo.].</p>
-                    <p>Fuente: <a href="https://www.bing.com/search?q=que%20up%20to%2064%20gb%20ram&qs=n&form=QBRE&sp=-1&ghc=1&lq=0&pq=que%20up%20to%2064%20gb%20ram&sc=7-19&sk=&cvid=380B9B49A2BD4005A5747469B0D2E223" target="_blank" style="color: #4CAF50;">[Bing ]</a></p>
-                </li>
-            </ul>
-        </section>
-
-        <hr>
-
-        <section id="parte3-bios">
-            <h2>PARTE 3: Parámetros de la BIOS/UEFI</h2>
-            
-            <h3>1. Foto de la BIOS o UEFI (Evidencia):</h3>
-            <p>La BIOS/UEFI es el firmware fundamental que inicializa y prueba los componentes del hardware (Techopedia, 2023).</p>
-            <div class="img-container">
-                <img src="bios.jpeg" alt="Foto de la interfaz BIOS o UEFI.">
-            </div>
-            
-            <h3 style="margin-top: 30px;">2. Explicación de Tres Parámetros:</h3>
-            <ul class="info-list">
-                <li>
-                    <strong>Parámetro 1: [Boot Configuration ]</strong>
-                    <p>Explicación: [La configuración de arranque (Boot Configuration) permite definir el orden de los dispositivos desde los cuales el sistema intentará iniciar, como discos duros, SSD, unidades USB o DVD. Su funcion es: garantizar que el sistema operativo se cargue desde la unidad correcta. ].</p>
-                    <p>Fuente: <a href="https://mundobytes.com/cambiar-el-orden-de-arranque-en-windows-boot-manager/" target="_blank" style="color: #4CAF50;">[Mundobytes, 2025]</a></p>
-                </li>
-                <li>
-                    <strong>Parámetro 2: [Fast Boot]</strong>
-                    <p>Explicación: [Fast Boot acelera el inicio del equipo al omitir parte del proceso de verificación del hardware (POST). Esto reduce el tiempo de arranque pero puede dificultar el acceso al BIOS si se activa.Función principal: optimizar el tiempo de encendido reduciendo las comprobaciones iniciales.].</p>
-                    <p>Fuente: <a href="https://hardzone.es/tutoriales/montaje/configurar-arranque-rapido-fast-boot-pc-bios/" target="_blank" style="color: #4CAF50;">[HardZone, 2022]</a></p>
-                </li>
-                <li>
-                    <strong>Parámetro 3: [Boost Mode Select]</strong>
-                    <p>Explicación: [Boost Mode Select o Game Boost permite aumentar automáticamente el rendimiento del procesador mediante overclocking preconfigurado. Este modo ajusta la frecuencia y el voltaje del CPU para mejorar la velocidad del sistema, aunque puede elevar la temperatura.Función principal: mejorar el rendimiento general mediante overclock automático.].</p>
-                    <p>Fuente: <a href="https://www.wisecleaner.com/think-tank/760-How-to-Enable-Processor-Performance-Boost-Mode-in-Windows.html" target="_blank" style="color: #4CAF50;">[wise cleaner,2025]</a></p>
-                </li>
-            </ul>
         </section>
         
-        <hr>
-
-        <section id="bibliografia">
-            <h2>Bibliografía y Referencias (Formato APA 7)</h2>
-            <p>Incluir aquí todas las referencias completas que citó a lo largo del documento. **Asegúrese de que cada referencia tenga un enlace web válido para su validación**.</p>
-            <ul class="info-list">
-                <li>Python Software Foundation. (2024). *SimpleHTTPRequestHandler*. Recuperado el 7 de octubre de 2025, de [Enlace a la documentación oficial o un tutorial de Python que muestre el comando `http.server`].</li>
-                <li>W3Schools. (2024). *HTML Tutorial*. Recuperado el 7 de octubre de 2025, de https://www.w3schools.com/html/default.asp</li>
-                <li>CPUID. (2024). *CPU-Z*. Recuperado el 7 de octubre de 2025, de https://www.cpuid.com/</li>
-                <li>[AUTOR]. ([AÑO]). *[TÍTULO DEL RECURSO]*. Recuperado el 7 de octubre de 2025, de [ENLACE WEB DE LA CARACTERÍSTICA 1]</li>
-                </ul>
-        </section>
+        <!-- ====================================================================== -->
+        <!-- ==========================   FOOTER   ================================ -->
+        <!-- ====================================================================== -->
+        <footer>
+            <div class="creators-section">
+                <h3>> VIVE-CODED BY_</h3>
+                <div class="creator">
+                    <a href="https://www.instagram.com/emicrip_idk" target="_blank">
+                        <svg viewBox="0 0 24 24"><path d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0 0,1 18.5,6.75A1.25,1.25 0 0,1 17.25,8A1.25,1.25 0 0,1 16,6.75A1.25,1.25 0 0,1 17.25,5.5M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z" /></svg>
+                        <span>@emicrip_idk</span>
+                    </a>
+                </div>
+                <div class="creator">
+                    <a href="https://www.instagram.com/diego_veloz87821" target="_blank">
+                        <svg viewBox="0 0 24 24"><path d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0 0,1 18.5,6.75A1.25,1.25 0 0,1 17.25,8A1.25,1.25 0 0,1 16,6.75A1.25,1.25 0 0,1 17.25,5.5M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z" /></svg>
+                        <span>@diego_veloz87821</span>
+                    </a>
+                </div>
+                <div class="creator">
+                    <a href="https://www.instagram.com/jsv_2601" target="_blank">
+                        <svg viewBox="0 0 24 24"><path d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0 0,1 18.5,6.75A1.25,1.25 0 0,1 17.25,8A1.25,1.25 0 0,1 16,6.75A1.25,1.25 0 0,1 17.25,5.5M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z" /></svg>
+                        <span>@jsv_2601</span>
+                    </a>
+                </div>
+                <div class="creator">
+                    <a href="https://www.instagram.com/teffi_perlita" target="_blank">
+                        <svg viewBox="0 0 24 24"><path d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M17.25,5.5A1.25,1.25 0 0,1 18.5,6.75A1.25,1.25 0 0,1 17.25,8A1.25,1.25 0 0,1 16,6.75A1.25,1.25 0 0,1 17.25,5.5M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z" /></svg>
+                        <span>@teffi_perlita</span>
+                    </a>
+                </div>
+            </div>
+        </footer>
 
     </div>
 
-    <footer>
-        <p>Documento Elaborado para [Nombre de la Asignatura]. Servidor: localhost:8000</p>
-    </footer>
-
 </body>
 </html>
+
+
